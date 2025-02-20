@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👨‍👩‍👧 Parent Child 👨‍👩‍👧‍👦</title>
+</head>
+<body>
+    <div id="main">
+        <div class="parent-container" id="parent-1"></div>
+            <label><input type="checkbox" class="parent" id="parent-checkbox-1" onclick="onParentClick(this, 'parent-1')"> Parent 1</label>
+            <div style="margin-left: 20px;">
+                <label><input type="checkbox" class="child" id="child-1-1" data-parent="parent-1" onclick="onChildClick(this)"> Child 1.1</label><br>
+                <label><input type="checkbox" class="child" id="child-1-2" data-parent="parent-1" onclick="onChildClick(this)"> Child 1.2</label><br>
+                <label><input type="checkbox" class="child" id="child-1-3" data-parent="parent-1" onclick="onChildClick(this)"> Child 1.3</label>
+            </div>
+        </div>
+        <div class="parent-container" id="parent-2">
+            <label><input type="checkbox" class="parent" id="parent-checkbox-2" onclick="onParentClick(this, 'parent-2')"> Parent 2</label>
+            <div style="margin-left: 20px;">
+                <label><input type="checkbox" class="child" id="child-2-1" data-parent="parent-2" onclick="onChildClick(this)"> Child 2.1</label><br>
+                <label><input type="checkbox" class="child" id="child-2-2" data-parent="parent-2" onclick="onChildClick(this)"> Child 2.2</label><br>
+                <label><input type="checkbox" class="child" id="child-2-3" data-parent="parent-2" onclick="onChildClick(this)"> Child 2.3</label>
+            </div>
+        </div>
+
+        <script>
+            function onParentClick(parentCheckbox, parentId) {
+                const children = document.querySelectorAll(`.child[data-parent="${parentId}"]`);
+                children.forEach(child => {
+                    child.checked = parentCheckbox.checked;
+                });
+            }
+
+            function onChildClick(thisCheckbox) {
+                const parentId = thisCheckbox.getAttribute('data-parent');
+                const parentCheckbox = document.getElementById(`parent-checkbox-${parentId.split('-')[1]}`);
+                const children = document.querySelectorAll(`.child[data-parent="${parentId}"]`);
+                const checkedChildren = document.querySelectorAll(`.child[data-parent="${parentId}"]:checked`);
+                parentCheckbox.checked = children.length === checkedChildren.length;
+            }
+        </script>
+    </div>
+</body>
+</html>
